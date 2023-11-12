@@ -286,7 +286,7 @@ class DeviceDataLoader:
 
 
 def get_default_device():
-    return torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    return torch.device('mps:0' if torch.backends.mps.is_available() else 'cpu')
 
 
 def save_images(images, path, **kwargs):
@@ -382,13 +382,16 @@ class BaseConfig:
 class TrainingConfig:
     TIMESTEPS = 1000  # Define number of diffusion timesteps
     IMG_SHAPE = (1, 32, 32) if BaseConfig.DATASET == "MNIST" else (3, 32, 32)
-    NUM_EPOCHS = 30
+    NUM_EPOCHS = 1
     BATCH_SIZE = 128
     LR = 2e-4
-    NUM_WORKERS = 2
+    NUM_WORKERS = 0
 
 
 # Load Dataset & Build Dataloader
+
+def rescale_pixel_intensity(t):
+    return (t * 2) - 1 # Scale between [-1, 1]
 
 def get_dataset(dataset_name='MNIST'):
     transforms = TF.Compose(
@@ -398,7 +401,8 @@ def get_dataset(dataset_name='MNIST'):
                       interpolation=TF.InterpolationMode.BICUBIC,
                       antialias=True),
             #             TF.RandomHorizontalFlip(),
-            TF.Lambda(lambda t: (t * 2) - 1)  # Scale between [-1, 1]
+            TF.Normalize(mean=0, std=1)
+            # TF.Lambda(lambda t: (t * 2) - 1)  # Scale between [-1, 1]
         ]
     )
 
@@ -690,7 +694,7 @@ for epoch in range(1, total_epochs):
     # Algorithm 1: Training
     train_one_epoch(model, sd, dataloader, optimizer, scaler, loss_fn, epoch=epoch)
 
-    if epoch % 5 == 0:
+    if epoch % 1 == 0:
         save_path = os.path.join(log_dir, f"{epoch}{ext}")
 
         # Algorithm 2: Sampling
