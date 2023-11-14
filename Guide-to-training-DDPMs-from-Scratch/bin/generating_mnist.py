@@ -17,7 +17,6 @@ from ddpm.training import train_one_epoch
 
 def main():
     # Visualize Dataset
-
     loader = get_dataloader(
         dataset_name=BaseConfig.DATASET,
         batch_size=128,
@@ -34,7 +33,6 @@ def main():
         break
 
     ## Sample Forward Diffusion Process
-
     sd = SimpleDiffusion(num_diffusion_timesteps=TrainingConfig.TIMESTEPS, device="cpu")
 
     loader = iter(  # converting dataloader into an iterator for now.
@@ -60,7 +58,6 @@ def main():
         noisy_images.append(xts)
 
     # Plot and see samples at different timesteps
-
     _, ax = plt.subplots(1, len(noisy_images), figsize=(10, 5), facecolor='white')
 
     for i, (timestep, noisy_sample) in enumerate(zip(specific_timesteps, noisy_images)):
@@ -73,16 +70,7 @@ def main():
     plt.axis("off")
     plt.show()
 
-
     # Training
-
-    # Algorithm 1: Training
-
-
-
-    # Algorithm 2: Sampling
-
-
     model = UNet(
         input_channels          = TrainingConfig.IMG_SHAPE[0],
         output_channels         = TrainingConfig.IMG_SHAPE[0],
@@ -132,9 +120,9 @@ def main():
             save_path = os.path.join(log_dir, f"{epoch}{ext}")
 
             # Algorithm 2: Sampling
-            reverse_diffusion(model, sd, timesteps=TrainingConfig.TIMESTEPS, num_images=32, generate_video=generate_video,
-                              save_path=save_path, img_shape=TrainingConfig.IMG_SHAPE, device=BaseConfig.DEVICE,
-                              )
+            reverse_diffusion(
+                model, sd, timesteps=TrainingConfig.TIMESTEPS, num_images=32, generate_video=generate_video,
+                save_path=save_path, img_shape=TrainingConfig.IMG_SHAPE, device=BaseConfig.DEVICE)
 
             # clear_output()
             checkpoint_dict = {
@@ -145,9 +133,7 @@ def main():
             torch.save(checkpoint_dict, os.path.join(checkpoint_dir, "ckpt.tar"))
             del checkpoint_dict
 
-
     # Inference
-
     model = UNet(
         input_channels          = TrainingConfig.IMG_SHAPE[0],
         output_channels         = TrainingConfig.IMG_SHAPE[0],
@@ -158,7 +144,6 @@ def main():
         time_multiple           = ModelConfig.TIME_EMB_MULT,
     )
     # checkpoint_dir = "/kaggle/working/Logs_Checkpoints/checkpoints/version_0"
-
 
     model.load_state_dict(torch.load(os.path.join(checkpoint_dir, "ckpt.tar"), map_location='cpu')['model'])
 
