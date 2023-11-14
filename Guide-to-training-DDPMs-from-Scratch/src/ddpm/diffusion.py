@@ -4,14 +4,11 @@ import torchvision.transforms as TF
 import torchvision
 from PIL import Image
 
-from utils import get
-from data_utils import inverse_transform
-from utils import frames2vid, display
+from ddpm.utils import get, frames2vid, display
+from ddpm.data_utils import inverse_transform
 
 
 # Diffusion Process
-
-
 class SimpleDiffusion:
     def __init__(
             self,

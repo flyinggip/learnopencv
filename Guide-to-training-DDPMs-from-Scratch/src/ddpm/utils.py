@@ -9,7 +9,6 @@ from IPython.display import display, HTML
 
 
 # Helper Functions
-
 def to_device(data, device):
     """Move tensor(s) to chosen device"""
     if isinstance(data, (list, tuple)):

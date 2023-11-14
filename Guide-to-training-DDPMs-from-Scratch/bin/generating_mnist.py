@@ -9,8 +9,7 @@ from torch.cuda import amp
 from torchvision.utils import make_grid
 
 from ddpm.config import BaseConfig, TrainingConfig, ModelConfig
-from ddpm.data_utils import get_dataloader
-from ddpm.data_utils import inverse_transform
+from ddpm.data_utils import get_dataloader, inverse_transform
 from ddpm.utils import setup_log_directory
 from ddpm.models import UNet
 from ddpm.diffusion import SimpleDiffusion, forward_diffusion, reverse_diffusion
@@ -121,6 +120,7 @@ def main():
     generate_video = False
     ext = ".mp4" if generate_video else ".png"
 
+    print("Training started")
     for epoch in range(1, total_epochs):
         torch.cuda.empty_cache()
         gc.collect()
@@ -173,6 +173,7 @@ def main():
     log_dir = "inference_results"
     os.makedirs(log_dir, exist_ok=True)
 
+    print("Inference started")
     generate_video = True
 
     ext = ".mp4" if generate_video else ".png"
@@ -193,168 +194,168 @@ def main():
     )
     print(save_path)
 
-    generate_video = True
-
-    ext = ".mp4" if generate_video else ".png"
-    filename = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}{ext}"
-
-    save_path = os.path.join(log_dir, filename)
-
-    reverse_diffusion(
-        model,
-        sd,
-        num_images=256,
-        generate_video=generate_video,
-        save_path=save_path,
-        timesteps=1000,
-        img_shape=TrainingConfig.IMG_SHAPE,
-        device=BaseConfig.DEVICE,
-        nrow=32,
-    )
-    print(save_path)
-
-    generate_video = True
-
-    ext = ".mp4" if generate_video else ".png"
-    filename = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}{ext}"
-
-    save_path = os.path.join(log_dir, filename)
-
-    reverse_diffusion(
-        model,
-        sd,
-        num_images=256,
-        generate_video=generate_video,
-        save_path=save_path,
-        timesteps=1000,
-        img_shape=TrainingConfig.IMG_SHAPE,
-        device=BaseConfig.DEVICE,
-        nrow=16,
-    )
-    print(save_path)
-
-    generate_video = True
-
-    ext = ".mp4" if generate_video else ".png"
-    filename = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}{ext}"
-
-    save_path = os.path.join(log_dir, filename)
-
-    reverse_diffusion(
-        model,
-        sd,
-        num_images=256,
-        generate_video=generate_video,
-        save_path=save_path,
-        timesteps=1000,
-        img_shape=TrainingConfig.IMG_SHAPE,
-        device=BaseConfig.DEVICE,
-        nrow=16,
-    )
-    print(save_path)
-
-    generate_video = True
-
-    ext = ".mp4" if generate_video else ".png"
-    filename = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}{ext}"
-
-    save_path = os.path.join(log_dir, filename)
-
-    reverse_diffusion(
-        model,
-        sd,
-        num_images=512,
-        generate_video=generate_video,
-        save_path=save_path,
-        timesteps=1000,
-        img_shape=TrainingConfig.IMG_SHAPE,
-        device=BaseConfig.DEVICE,
-        nrow=32,
-    )
-    print(save_path)
-
-    generate_video = True
-
-    ext = ".mp4" if generate_video else ".png"
-    filename = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}{ext}"
-
-    save_path = os.path.join(log_dir, filename)
-
-    reverse_diffusion(
-        model,
-        sd,
-        num_images=16,
-        generate_video=generate_video,
-        save_path=save_path,
-        timesteps=1000,
-        img_shape=TrainingConfig.IMG_SHAPE,
-        device=BaseConfig.DEVICE,
-        nrow=4,
-    )
-    print(save_path)
-
-    generate_video = True
-
-    ext = ".mp4" if generate_video else ".png"
-    filename = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}{ext}"
-
-    save_path = os.path.join(log_dir, filename)
-    print(save_path)
-
-    reverse_diffusion(
-        model,
-        sd,
-        num_images=128,
-        generate_video=generate_video,
-        save_path=save_path,
-        timesteps=1000,
-        img_shape=TrainingConfig.IMG_SHAPE,
-        device=BaseConfig.DEVICE,
-        nrow=8,
-    )
-    print(save_path)
-
-    generate_video = True
-
-    ext = ".mp4" if generate_video else ".png"
-    filename = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}{ext}"
-
-    save_path = os.path.join(log_dir, filename)
-    print(save_path)
-
-    reverse_diffusion(
-        model,
-        sd,
-        num_images=256,
-        generate_video=generate_video,
-        save_path=save_path,
-        timesteps=1000,
-        img_shape=TrainingConfig.IMG_SHAPE,
-        device=BaseConfig.DEVICE,
-        nrow=16,
-    )
-    print(save_path)
-
-    generate_video = False
-
-    ext = ".mp4" if generate_video else ".png"
-    filename = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}{ext}"
-
-    save_path = os.path.join(log_dir, filename)
-
-
-    reverse_diffusion(
-        model,
-        sd,
-        num_images=128,
-        generate_video=generate_video,
-        save_path=save_path,
-        timesteps=1000,
-        img_shape=TrainingConfig.IMG_SHAPE,
-        device=BaseConfig.DEVICE,
-        nrow=16,
-    )
-    print(save_path)
+    # generate_video = True
+    #
+    # ext = ".mp4" if generate_video else ".png"
+    # filename = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}{ext}"
+    #
+    # save_path = os.path.join(log_dir, filename)
+    #
+    # reverse_diffusion(
+    #     model,
+    #     sd,
+    #     num_images=256,
+    #     generate_video=generate_video,
+    #     save_path=save_path,
+    #     timesteps=1000,
+    #     img_shape=TrainingConfig.IMG_SHAPE,
+    #     device=BaseConfig.DEVICE,
+    #     nrow=32,
+    # )
+    # print(save_path)
+    #
+    # generate_video = True
+    #
+    # ext = ".mp4" if generate_video else ".png"
+    # filename = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}{ext}"
+    #
+    # save_path = os.path.join(log_dir, filename)
+    #
+    # reverse_diffusion(
+    #     model,
+    #     sd,
+    #     num_images=256,
+    #     generate_video=generate_video,
+    #     save_path=save_path,
+    #     timesteps=1000,
+    #     img_shape=TrainingConfig.IMG_SHAPE,
+    #     device=BaseConfig.DEVICE,
+    #     nrow=16,
+    # )
+    # print(save_path)
+    #
+    # generate_video = True
+    #
+    # ext = ".mp4" if generate_video else ".png"
+    # filename = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}{ext}"
+    #
+    # save_path = os.path.join(log_dir, filename)
+    #
+    # reverse_diffusion(
+    #     model,
+    #     sd,
+    #     num_images=256,
+    #     generate_video=generate_video,
+    #     save_path=save_path,
+    #     timesteps=1000,
+    #     img_shape=TrainingConfig.IMG_SHAPE,
+    #     device=BaseConfig.DEVICE,
+    #     nrow=16,
+    # )
+    # print(save_path)
+    #
+    # generate_video = True
+    #
+    # ext = ".mp4" if generate_video else ".png"
+    # filename = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}{ext}"
+    #
+    # save_path = os.path.join(log_dir, filename)
+    #
+    # reverse_diffusion(
+    #     model,
+    #     sd,
+    #     num_images=512,
+    #     generate_video=generate_video,
+    #     save_path=save_path,
+    #     timesteps=1000,
+    #     img_shape=TrainingConfig.IMG_SHAPE,
+    #     device=BaseConfig.DEVICE,
+    #     nrow=32,
+    # )
+    # print(save_path)
+    #
+    # generate_video = True
+    #
+    # ext = ".mp4" if generate_video else ".png"
+    # filename = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}{ext}"
+    #
+    # save_path = os.path.join(log_dir, filename)
+    #
+    # reverse_diffusion(
+    #     model,
+    #     sd,
+    #     num_images=16,
+    #     generate_video=generate_video,
+    #     save_path=save_path,
+    #     timesteps=1000,
+    #     img_shape=TrainingConfig.IMG_SHAPE,
+    #     device=BaseConfig.DEVICE,
+    #     nrow=4,
+    # )
+    # print(save_path)
+    #
+    # generate_video = True
+    #
+    # ext = ".mp4" if generate_video else ".png"
+    # filename = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}{ext}"
+    #
+    # save_path = os.path.join(log_dir, filename)
+    # print(save_path)
+    #
+    # reverse_diffusion(
+    #     model,
+    #     sd,
+    #     num_images=128,
+    #     generate_video=generate_video,
+    #     save_path=save_path,
+    #     timesteps=1000,
+    #     img_shape=TrainingConfig.IMG_SHAPE,
+    #     device=BaseConfig.DEVICE,
+    #     nrow=8,
+    # )
+    # print(save_path)
+    #
+    # generate_video = True
+    #
+    # ext = ".mp4" if generate_video else ".png"
+    # filename = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}{ext}"
+    #
+    # save_path = os.path.join(log_dir, filename)
+    # print(save_path)
+    #
+    # reverse_diffusion(
+    #     model,
+    #     sd,
+    #     num_images=256,
+    #     generate_video=generate_video,
+    #     save_path=save_path,
+    #     timesteps=1000,
+    #     img_shape=TrainingConfig.IMG_SHAPE,
+    #     device=BaseConfig.DEVICE,
+    #     nrow=16,
+    # )
+    # print(save_path)
+    #
+    # generate_video = False
+    #
+    # ext = ".mp4" if generate_video else ".png"
+    # filename = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}{ext}"
+    #
+    # save_path = os.path.join(log_dir, filename)
+    #
+    #
+    # reverse_diffusion(
+    #     model,
+    #     sd,
+    #     num_images=128,
+    #     generate_video=generate_video,
+    #     save_path=save_path,
+    #     timesteps=1000,
+    #     img_shape=TrainingConfig.IMG_SHAPE,
+    #     device=BaseConfig.DEVICE,
+    #     nrow=16,
+    # )
+    # print(save_path)
 
 
 if __name__ == '__main__':

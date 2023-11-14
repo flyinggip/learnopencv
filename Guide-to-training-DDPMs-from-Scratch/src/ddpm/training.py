@@ -3,8 +3,8 @@ import torch
 from torch.cuda import amp
 from torchmetrics import MeanMetric
 
-from diffusion import forward_diffusion
-from config import BaseConfig, TrainingConfig
+from ddpm.diffusion import forward_diffusion
+from ddpm.config import BaseConfig, TrainingConfig
 
 
 def train_one_epoch(model, sd, loader, optimizer, scaler, loss_fn, epoch=800,

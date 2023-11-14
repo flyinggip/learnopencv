@@ -1,12 +1,10 @@
 import os
 
-from utils import get_default_device
-
-# Configurations
-
 from dataclasses import dataclass
 
+from ddpm.utils import get_default_device
 
+# Configurations
 @dataclass
 class BaseConfig:
     DEVICE = get_default_device()

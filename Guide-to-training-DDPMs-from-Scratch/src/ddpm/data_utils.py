@@ -2,7 +2,7 @@ import torchvision.transforms as TF
 import torchvision.datasets as datasets
 from torch.utils.data import DataLoader
 
-from utils import to_device
+from ddpm.utils import to_device
 
 
 # Load Dataset & Build Dataloader
